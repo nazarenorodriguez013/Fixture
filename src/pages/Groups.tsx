@@ -1,0 +1,70 @@
+import { useState } from 'react';
+import { teams } from '../data/teams';
+import { matches } from '../data/matches';
+import GroupTable from '../components/GroupTable';
+import MatchCard from '../components/MatchCard';
+import { useResults } from '../hooks/useResults';
+
+const GROUPS = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+
+export default function Groups() {
+  const [selected, setSelected] = useState('A');
+  const { results, setResult, clearResult } = useResults();
+
+  const groupMatches = matches.filter((m) => m.group === selected);
+  const groupTeams = teams.filter((t) => t.group === selected);
+
+  return (
+    <div className="p-4 space-y-4 max-w-lg mx-auto">
+      <h1 className="text-xl font-bold text-white">Grupos</h1>
+
+      {/* Group selector */}
+      <div className="flex flex-wrap gap-2">
+        {GROUPS.map((g) => (
+          <button
+            key={g}
+            onClick={() => setSelected(g)}
+            className={`w-10 h-10 rounded-xl font-bold text-sm transition-colors ${
+              selected === g
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+            }`}
+          >
+            {g}
+          </button>
+        ))}
+      </div>
+
+      {/* Group header */}
+      <div className="bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden">
+        <div className="bg-blue-900/50 px-4 py-3 border-b border-gray-800">
+          <h2 className="text-white font-bold">Grupo {selected}</h2>
+          <div className="flex flex-wrap gap-2 mt-1">
+            {groupTeams.map((t) => (
+              <span key={t.id} className="text-xs text-blue-300">
+                {t.flag} {t.name}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="p-3">
+          <GroupTable group={selected} results={results} />
+        </div>
+      </div>
+
+      {/* Matches */}
+      <h2 className="text-gray-300 font-semibold">Partidos · Grupo {selected}</h2>
+      <div className="space-y-3">
+        {groupMatches.map((m) => (
+          <MatchCard
+            key={m.id}
+            match={m}
+            result={results[m.id]}
+            onSave={setResult}
+            onClear={clearResult}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
