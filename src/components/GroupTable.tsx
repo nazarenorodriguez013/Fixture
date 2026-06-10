@@ -1,4 +1,5 @@
 import { teams } from '../data/teams';
+import TeamFlag from './TeamFlag';
 import { matches } from '../data/matches';
 import type { Result } from '../hooks/useResults';
 
@@ -73,7 +74,7 @@ export default function GroupTable({ group, results }: Props) {
                 <td className="py-2 pl-1">
                   <div className="flex items-center gap-2">
                     <span className="text-gray-500 text-xs w-4">{i + 1}</span>
-                    <span>{team.flag}</span>
+                    <TeamFlag flagCode={team.flagCode} name={team.name} />
                     <span className="text-white truncate max-w-[8rem]">{team.name}</span>
                   </div>
                 </td>
