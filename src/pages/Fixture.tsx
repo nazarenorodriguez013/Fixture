@@ -19,16 +19,16 @@ export default function Fixture() {
       if (m.phase !== phase) return false;
       if (phase === 'group' && group !== 'todos' && m.group !== group) return false;
       return true;
-    });
+    }).sort((a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime());
   }, [phase, group]);
 
   const phaseButtons = [
     { key: 'group', label: 'Grupos' },
-    { key: 'r32', label: 'Octavos' },
-    { key: 'r16', label: 'R. 16' },
+    { key: 'r32', label: '32avos' },
+    { key: 'r16', label: 'Octavos' },
     { key: 'qf', label: 'Cuartos' },
     { key: 'sf', label: 'Semis' },
-    { key: '3rd', label: '3er Pto' },
+    { key: '3rd', label: '3er Lugar' },
     { key: 'final', label: 'Final' },
   ];
 
