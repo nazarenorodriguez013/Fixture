@@ -25,6 +25,14 @@ export default function Venues() {
           <div className="space-y-3">
             {vlist.map((v) => (
               <div key={v.id} className="bg-gray-900 rounded-2xl border border-gray-800 p-4">
+                {v.photoUrl && (
+                  <img
+                    src={v.photoUrl}
+                    alt={v.name}
+                    className="w-full h-36 object-cover rounded-lg mb-2"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  />
+                )}
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <h3 className="text-white font-semibold">{v.name}</h3>
