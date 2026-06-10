@@ -34,6 +34,7 @@ export default function Groups() {
           <button
             key={g}
             onClick={() => setSelected(g)}
+            translate="no"
             className={`min-w-[2rem] px-2 py-1 rounded-lg font-bold text-xs transition-colors ${
               selected === g
                 ? 'bg-blue-600 text-white'

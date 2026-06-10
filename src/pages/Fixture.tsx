@@ -24,10 +24,10 @@ export default function Fixture() {
 
   const phaseButtons = [
     { key: 'group', label: 'Grupos' },
-    { key: 'r32', label: '32avos' },
+    { key: 'r32', label: 'Dieciseisavos' },
     { key: 'r16', label: 'Octavos' },
     { key: 'qf', label: 'Cuartos' },
-    { key: 'sf', label: 'Semis' },
+    { key: 'sf', label: 'Semifinales' },
     { key: '3rd', label: '3er Lugar' },
     { key: 'final', label: 'Final' },
   ];
@@ -78,6 +78,7 @@ export default function Fixture() {
             <button
               key={g}
               onClick={() => setGroup(g)}
+              translate="no"
               className={`shrink-0 w-9 h-9 rounded-xl text-sm font-bold transition-colors ${
                 group === g ? 'bg-yellow-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
