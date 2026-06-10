@@ -24,8 +24,20 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
 
   const homeTeam = getTeam(match.homeId);
   const awayTeam = getTeam(match.awayId);
-  const homeName = homeTeam?.name ?? match.homeId;
-  const awayName = awayTeam?.name ?? match.awayId;
+
+  function formatPlaceholder(id: string) {
+    if (id.startsWith('W_R32_')) return `Gan. Partido ${id.replace('W_R32_', '')}`;
+    if (id.startsWith('W_R16_')) return `Gan. Octavos ${id.replace('W_R16_', '')}`;
+    if (id.startsWith('W_QF_')) return `Gan. Cuartos ${id.replace('W_QF_', '')}`;
+    if (id.startsWith('W_SF_')) return `Gan. Semis ${id.replace('W_SF_', '')}`;
+    if (id.startsWith('L_SF_')) return `Sub. Semis ${id.replace('L_SF_', '')}`;
+    if (/^[123][A-L]$/.test(id)) return `${id[0]}° Grupo ${id[1]}`;
+    if (/^T3_/.test(id)) return `3° Grupo ${id.replace('T3_','')}`;
+    return 'Por definir';
+  }
+
+  const homeName = homeTeam?.name ?? formatPlaceholder(match.homeId);
+  const awayName = awayTeam?.name ?? formatPlaceholder(match.awayId);
 
   function handleSave() {
     const h = parseInt(home);
