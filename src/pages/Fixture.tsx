@@ -33,8 +33,18 @@ export default function Fixture() {
   ];
 
   return (
-    <div className="p-4 space-y-4 max-w-lg mx-auto">
-      <h1 className="text-xl font-bold text-white">Fixture</h1>
+    <div className="space-y-4 max-w-lg mx-auto">
+      {/* Page header with background */}
+      <div
+        className="relative bg-cover bg-center bg-no-repeat overflow-hidden"
+        style={{ backgroundImage: "url('/bg-trofeo.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="relative z-10 px-4 pt-6 pb-4">
+          <h1 className="text-xl font-bold text-white">Fixture</h1>
+        </div>
+      </div>
+      <div className="px-4 space-y-4">
 
       {/* Phase filter */}
       <div className="flex overflow-x-auto gap-2 pb-1 no-scrollbar">
@@ -90,6 +100,7 @@ export default function Fixture() {
             onClear={clearResult}
           />
         ))}
+      </div>
       </div>
     </div>
   );
