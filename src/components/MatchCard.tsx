@@ -3,18 +3,13 @@ import { getTeam } from '../data/teams';
 import { venues } from '../data/venues';
 import type { Match } from '../data/matches';
 import type { Result } from '../hooks/useResults';
+import TeamFlag from './TeamFlag';
 
 interface Props {
   match: Match;
   result?: Result;
   onSave: (id: string, r: Result) => void;
   onClear: (id: string) => void;
-}
-
-function teamLabel(id: string) {
-  const t = getTeam(id);
-  if (t) return `${t.flag} ${t.name}`;
-  return id;
 }
 
 export default function MatchCard({ match, result, onSave, onClear }: Props) {
@@ -27,9 +22,10 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
   const dateStr = dateObj.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
   const timeStr = dateObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-  const isKnownTeam = (id: string) => !!getTeam(id);
-  const homeName = isKnownTeam(match.homeId) ? teamLabel(match.homeId) : match.homeId;
-  const awayName = isKnownTeam(match.awayId) ? teamLabel(match.awayId) : match.awayId;
+  const homeTeam = getTeam(match.homeId);
+  const awayTeam = getTeam(match.awayId);
+  const homeName = homeTeam?.name ?? match.homeId;
+  const awayName = awayTeam?.name ?? match.awayId;
 
   function handleSave() {
     const h = parseInt(home);
@@ -58,7 +54,10 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
       </div>
 
       <div className="flex items-center gap-2">
-        <span className="flex-1 text-sm font-medium text-right leading-tight">{homeName}</span>
+        <span className="flex-1 text-sm font-medium text-right leading-tight flex items-center justify-end gap-1">
+          {homeName}
+          {homeTeam && <TeamFlag flagCode={homeTeam.flagCode} name={homeTeam.name} />}
+        </span>
 
         {result && !editing ? (
           <div className="flex items-center gap-1 shrink-0">
@@ -96,7 +95,10 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
           </div>
         )}
 
-        <span className="flex-1 text-sm font-medium leading-tight">{awayName}</span>
+        <span className="flex-1 text-sm font-medium leading-tight flex items-center gap-1">
+          {awayTeam && <TeamFlag flagCode={awayTeam.flagCode} name={awayTeam.name} />}
+          {awayName}
+        </span>
       </div>
 
       <div className="flex items-center justify-between mt-2">
