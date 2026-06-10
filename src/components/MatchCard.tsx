@@ -23,8 +23,9 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
   const [away, setAway] = useState('');
 
   const venue = venues.find((v) => v.id === match.venueId);
-  const dateObj = new Date(match.date + 'T' + match.time);
-  const dateStr = dateObj.toLocaleDateString('es-MX', { weekday: 'short', day: 'numeric', month: 'short' });
+  const dateObj = new Date(match.datetime);
+  const dateStr = dateObj.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+  const timeStr = dateObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
   const isKnownTeam = (id: string) => !!getTeam(id);
   const homeName = isKnownTeam(match.homeId) ? teamLabel(match.homeId) : match.homeId;
@@ -48,7 +49,7 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
   return (
     <div className="bg-gray-900 rounded-xl p-3 border border-gray-800">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs text-gray-400">{dateStr} · {match.time}</span>
+        <span className="text-xs text-gray-400">{dateStr} · {timeStr}</span>
         {match.group && (
           <span className="text-xs bg-blue-900 text-blue-300 px-2 py-0.5 rounded-full">
             Grupo {match.group}
