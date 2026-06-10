@@ -4,12 +4,14 @@ import { matches } from '../data/matches';
 import GroupTable from '../components/GroupTable';
 import MatchCard from '../components/MatchCard';
 import { useResults } from '../hooks/useResults';
+import { useKnockoutMap } from '../hooks/useKnockoutMap';
 
 const GROUPS = ['A','B','C','D','E','F','G','H','I','J','K','L'];
 
 export default function Groups() {
   const [selected, setSelected] = useState('A');
   const { results, setResult, clearResult } = useResults();
+  const knockoutMap = useKnockoutMap(results);
 
   const groupMatches = matches.filter((m) => m.group === selected);
   const groupTeams = teams.filter((t) => t.group === selected);
@@ -73,6 +75,7 @@ export default function Groups() {
             result={results[m.id]}
             onSave={setResult}
             onClear={clearResult}
+            knockoutMap={knockoutMap}
           />
         ))}
       </div>
