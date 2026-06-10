@@ -23,11 +23,17 @@ export default function Home() {
   return (
     <div className="p-4 space-y-6 max-w-lg mx-auto">
       {/* Hero */}
-      <div className="rounded-2xl bg-gradient-to-br from-blue-900 to-blue-950 border border-blue-800 p-6 text-center">
-        <div className="text-5xl mb-3">🏆</div>
-        <h1 className="text-2xl font-bold text-white">FIFA World Cup</h1>
-        <p className="text-blue-300 text-lg font-semibold">2026</p>
-        <p className="text-blue-400 text-sm mt-1">EE.UU. · Canadá · México</p>
+      <div
+        className="relative min-h-[40vh] bg-cover bg-center bg-no-repeat flex items-center justify-center rounded-2xl overflow-hidden"
+        style={{ backgroundImage: "url('/bg-estadio.jpg'), linear-gradient(to bottom right, #1e3a5f, #0f172a)" }}
+      >
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative z-10 text-center px-4 py-6">
+          <div className="text-5xl mb-3">🏆</div>
+          <h1 className="text-2xl font-bold text-white">FIFA World Cup</h1>
+          <p className="text-blue-300 text-lg font-semibold">2026</p>
+          <p className="text-blue-400 text-sm mt-1">EE.UU. · Canadá · México</p>
+        </div>
       </div>
 
       {/* Countdown */}
