@@ -101,7 +101,7 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
 
       <div className="flex items-center justify-between mt-2">
         <span className="text-xs text-gray-500 truncate max-w-[60%]">
-          🏟️ {venue?.name ?? match.venueId}
+          🏟️ {venue ? `${venue.name}, ${venue.city}` : match.venueId}
         </span>
         <div className="flex gap-2">
           {editing ? (
