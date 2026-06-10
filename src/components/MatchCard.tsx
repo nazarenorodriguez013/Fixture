@@ -59,41 +59,39 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
           {homeTeam && <TeamFlag flagCode={homeTeam.flagCode} name={homeTeam.name} />}
         </span>
 
-        {result && !editing ? (
-          <div className="flex items-center gap-1 shrink-0">
-            <span className="bg-gray-800 text-white font-bold text-lg px-3 py-1 rounded-lg min-w-[2.5rem] text-center">
-              {result.homeScore}
-            </span>
-            <span className="text-gray-500">-</span>
-            <span className="bg-gray-800 text-white font-bold text-lg px-3 py-1 rounded-lg min-w-[2.5rem] text-center">
-              {result.awayScore}
-            </span>
-          </div>
-        ) : editing ? (
-          <div className="flex items-center gap-1 shrink-0">
-            <input
-              className="w-12 text-center bg-gray-800 border border-blue-500 rounded-lg text-white font-bold text-lg px-1 py-1"
-              value={home}
-              onChange={(e) => setHome(e.target.value)}
-              type="number"
-              min="0"
-              max="99"
-            />
-            <span className="text-gray-500">-</span>
-            <input
-              className="w-12 text-center bg-gray-800 border border-blue-500 rounded-lg text-white font-bold text-lg px-1 py-1"
-              value={away}
-              onChange={(e) => setAway(e.target.value)}
-              type="number"
-              min="0"
-              max="99"
-            />
-          </div>
-        ) : (
-          <div className="flex items-center gap-2 shrink-0 px-3">
-            <span className="text-gray-600 text-xl font-bold">vs</span>
-          </div>
-        )}
+        <div className="flex items-center gap-1 shrink-0">
+          {editing ? (
+            <>
+              <input
+                className="w-12 text-center bg-gray-800 border border-blue-500 rounded-lg text-white font-bold text-lg px-1 py-1"
+                value={home}
+                onChange={(e) => setHome(e.target.value)}
+                type="number"
+                min="0"
+                max="99"
+              />
+              <span className="text-gray-500">-</span>
+              <input
+                className="w-12 text-center bg-gray-800 border border-blue-500 rounded-lg text-white font-bold text-lg px-1 py-1"
+                value={away}
+                onChange={(e) => setAway(e.target.value)}
+                type="number"
+                min="0"
+                max="99"
+              />
+            </>
+          ) : (
+            <>
+              <span className="bg-gray-800 text-white font-bold text-lg px-3 py-1 rounded-lg min-w-[2.5rem] text-center">
+                {result ? result.homeScore : '-'}
+              </span>
+              <span className="text-gray-500">-</span>
+              <span className="bg-gray-800 text-white font-bold text-lg px-3 py-1 rounded-lg min-w-[2.5rem] text-center">
+                {result ? result.awayScore : '-'}
+              </span>
+            </>
+          )}
+        </div>
 
         <span className="flex-1 text-sm font-medium leading-tight flex items-center gap-1">
           {awayTeam && <TeamFlag flagCode={awayTeam.flagCode} name={awayTeam.name} />}

@@ -29,12 +29,12 @@ export default function Groups() {
       <div className="px-4 space-y-4">
 
       {/* Group selector */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1">
         {GROUPS.map((g) => (
           <button
             key={g}
             onClick={() => setSelected(g)}
-            className={`w-10 h-10 rounded-xl font-bold text-sm transition-colors ${
+            className={`min-w-[2rem] px-2 py-1 rounded-lg font-bold text-xs transition-colors ${
               selected === g
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-800 text-gray-300 hover:bg-gray-700'

@@ -1,8 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { matches } from '../data/matches';
 import { useResults } from '../hooks/useResults';
 
-function useCountdown() {
+function calcCountdown() {
   const target = new Date('2026-06-11T18:00:00');
   const now = new Date();
   const diff = target.getTime() - now.getTime();
@@ -10,11 +11,17 @@ function useCountdown() {
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  return { days, hours, mins };
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
+  return { days, hours, mins, secs };
 }
 
 export default function Home() {
-  const countdown = useCountdown();
+  const [countdown, setCountdown] = useState(calcCountdown);
+
+  useEffect(() => {
+    const id = setInterval(() => setCountdown(calcCountdown()), 1000);
+    return () => clearInterval(id);
+  }, []);
   const { results } = useResults();
 
   const groupMatches = matches.filter((m) => m.phase === 'group');
@@ -24,12 +31,12 @@ export default function Home() {
     <div className="p-4 space-y-6 max-w-lg mx-auto">
       {/* Hero */}
       <div
-        className="relative min-h-[40vh] bg-cover bg-center bg-no-repeat flex items-center justify-center rounded-2xl overflow-hidden"
+        className="relative min-h-screen bg-fixed bg-cover bg-center bg-no-repeat flex items-center justify-center overflow-hidden"
         style={{ backgroundImage: "url('/bg-estadio.webp'), linear-gradient(to bottom right, #1e3a5f, #0f172a)" }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 text-center px-4 py-6">
-          <div className="text-5xl mb-3">🏆</div>
+          <img src="/bg-logo.webp" alt="FIFA World Cup 2026" className="w-36 mx-auto mb-3 drop-shadow-lg" />
           <h1 className="text-2xl font-bold text-white">FIFA World Cup</h1>
           <p className="text-blue-300 text-lg font-semibold">2026</p>
           <p className="text-blue-400 text-sm mt-1">EE.UU. · Canadá · México</p>
@@ -45,6 +52,7 @@ export default function Home() {
               { v: countdown.days, l: 'Días' },
               { v: countdown.hours, l: 'Horas' },
               { v: countdown.mins, l: 'Min' },
+              { v: countdown.secs, l: 'Seg' },
             ].map(({ v, l }) => (
               <div key={l} className="text-center">
                 <div className="text-3xl font-bold text-white bg-gray-800 rounded-xl w-16 h-16 flex items-center justify-center">
