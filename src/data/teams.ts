@@ -11,7 +11,7 @@ export const teams: Team[] = [
   { id: 'mex', name: 'México', flag: '🇲🇽', flagCode: 'mx', group: 'A' },
   { id: 'rsa', name: 'Sudáfrica', flag: '🇿🇦', flagCode: 'za', group: 'A' },
   { id: 'kor', name: 'Corea del Sur', flag: '🇰🇷', flagCode: 'kr', group: 'A' },
-  { id: 'cze', name: 'Chequia', flag: '🇨🇿', flagCode: 'cz', group: 'A' },
+  { id: 'cze', name: 'República Checa', flag: '🇨🇿', flagCode: 'cz', group: 'A' },
   // Group B
   { id: 'can', name: 'Canadá', flag: '🇨🇦', flagCode: 'ca', group: 'B' },
   { id: 'bih', name: 'Bosnia-Herzegovina', flag: '🇧🇦', flagCode: 'ba', group: 'B' },
