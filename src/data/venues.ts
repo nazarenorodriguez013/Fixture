@@ -6,6 +6,7 @@ export interface Venue {
   countryFlag: string;
   capacity: number;
   image: string;
+  photoUrl?: string;
 }
 
 export const venues: Venue[] = [
