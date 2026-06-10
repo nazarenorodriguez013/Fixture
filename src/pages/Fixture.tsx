@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { matches, phaseLabel } from '../data/matches';
 import MatchCard from '../components/MatchCard';
 import { useResults } from '../hooks/useResults';
+import { useKnockoutMap } from '../hooks/useKnockoutMap';
 
 
 const GROUPS = ['A','B','C','D','E','F','G','H','I','J','K','L'];
@@ -13,6 +14,7 @@ export default function Fixture() {
   const [phase, setPhase] = useState<string>(initFase);
   const [group, setGroup] = useState<string>('todos');
   const { results, setResult, clearResult } = useResults();
+  const knockoutMap = useKnockoutMap(results);
 
   const filtered = useMemo(() => {
     return matches.filter((m) => {
@@ -99,6 +101,7 @@ export default function Fixture() {
             result={results[m.id]}
             onSave={setResult}
             onClear={clearResult}
+            knockoutMap={knockoutMap}
           />
         ))}
       </div>

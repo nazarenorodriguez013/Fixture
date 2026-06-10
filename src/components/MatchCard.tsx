@@ -10,9 +10,10 @@ interface Props {
   result?: Result;
   onSave: (id: string, r: Result) => void;
   onClear: (id: string) => void;
+  knockoutMap?: Record<string, string>;
 }
 
-export default function MatchCard({ match, result, onSave, onClear }: Props) {
+export default function MatchCard({ match, result, onSave, onClear, knockoutMap = {} }: Props) {
   const [editing, setEditing] = useState(false);
   const [home, setHome] = useState('');
   const [away, setAway] = useState('');
@@ -22,20 +23,26 @@ export default function MatchCard({ match, result, onSave, onClear }: Props) {
   const dateStr = dateObj.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
   const timeStr = dateObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-  const homeTeam = getTeam(match.homeId);
-  const awayTeam = getTeam(match.awayId);
+  // Resolve placeholder through knockoutMap first, then fallback to direct team lookup
+  function resolveId(id: string): string {
+    return knockoutMap[id] ?? id;
+  }
 
   function formatPlaceholder(id: string) {
     if (id.startsWith('W_R32_')) return `Gan. Partido ${id.replace('W_R32_', '')}`;
     if (id.startsWith('W_R16_')) return `Gan. Octavos ${id.replace('W_R16_', '')}`;
-    if (id.startsWith('W_QF_')) return `Gan. Cuartos ${id.replace('W_QF_', '')}`;
-    if (id.startsWith('W_SF_')) return `Gan. Semis ${id.replace('W_SF_', '')}`;
-    if (id.startsWith('L_SF_')) return `Sub. Semis ${id.replace('L_SF_', '')}`;
+    if (id.startsWith('W_QF_'))  return `Gan. Cuartos ${id.replace('W_QF_', '')}`;
+    if (id.startsWith('W_SF_'))  return `Gan. Semis ${id.replace('W_SF_', '')}`;
+    if (id.startsWith('L_SF_'))  return `Sub. Semis ${id.replace('L_SF_', '')}`;
     if (/^[123][A-L]$/.test(id)) return `${id[0]}° Grupo ${id[1]}`;
-    if (/^T3_/.test(id)) return `3° Grupo ${id.replace('T3_','')}`;
+    if (id.startsWith('3rd'))    return `Mejor 3° #${id.replace('3rd', '')}`;
     return 'Por definir';
   }
 
+  const resolvedHomeId = resolveId(match.homeId);
+  const resolvedAwayId = resolveId(match.awayId);
+  const homeTeam = getTeam(resolvedHomeId);
+  const awayTeam = getTeam(resolvedAwayId);
   const homeName = homeTeam?.name ?? formatPlaceholder(match.homeId);
   const awayName = awayTeam?.name ?? formatPlaceholder(match.awayId);
 
