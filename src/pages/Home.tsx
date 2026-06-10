@@ -25,7 +25,7 @@ export default function Home() {
       {/* Hero */}
       <div
         className="relative min-h-[40vh] bg-cover bg-center bg-no-repeat flex items-center justify-center rounded-2xl overflow-hidden"
-        style={{ backgroundImage: "url('/bg-estadio.jpg'), linear-gradient(to bottom right, #1e3a5f, #0f172a)" }}
+        style={{ backgroundImage: "url('/bg-estadio.webp'), linear-gradient(to bottom right, #1e3a5f, #0f172a)" }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 text-center px-4 py-6">
