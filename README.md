@@ -1,73 +1,32 @@
-# React + TypeScript + Vite
+# Mundial 2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PWA para seguir el Mundial de fútbol 2026 (EE.UU. · Canadá · México): fase de grupos, tabla de posiciones en vivo, bracket eliminatorio y sedes.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Fixture completo**: los 104 partidos oficiales de la fase de grupos y las eliminatorias (dieciseisavos, octavos, cuartos, semis, tercer puesto y final), con horarios convertidos a la zona horaria del usuario.
+- **Carga de resultados**: se pueden cargar los resultados de cada partido y quedan guardados en el dispositivo (`localStorage`).
+- **Tablas de posiciones**: se calculan en vivo (puntos, diferencia de gol, goles a favor) a partir de los resultados cargados.
+- **Bracket eliminatorio automático**: a medida que se completa un grupo o una ronda, la app resuelve quién avanza (1°, 2° y los 8 mejores terceros) y arma los cruces siguientes solo.
+- **Sedes**: los 16 estadios de las tres sedes, con capacidad y foto.
+- **Instalable como app (PWA)**: funciona offline y se puede instalar en el celular o la compu.
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + TypeScript
+- Vite + vite-plugin-pwa
+- React Router
+- Tailwind CSS
 
-## Expanding the ESLint configuration
+## Desarrollo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev      # servidor de desarrollo
+npm run build    # build de producción
+npm run lint     # eslint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Estado conocido
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Los penales en eliminación directa no se registran: si un partido de knockout termina empatado, el ganador queda "por definir" hasta que se cargue un resultado con diferencia de goles.
