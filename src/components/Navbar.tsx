@@ -22,10 +22,9 @@ export default function Navbar() {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [dismissed, setDismissed] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
-  const [installed, setInstalled] = useState(false);
+  const [installed] = useState(isInstalled);
 
   useEffect(() => {
-    setInstalled(isInstalled());
     const handler = (e: Event) => {
       e.preventDefault();
       setInstallPrompt(e as BeforeInstallPromptEvent);
