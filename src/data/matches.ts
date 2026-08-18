@@ -136,7 +136,7 @@ export const matches: Match[] = [
 
 export const phaseLabel: Record<Match['phase'], string> = {
   group: 'Fase de Grupos',
-  r32: '32avos de Final',
+  r32: 'Dieciseisavos de Final',
   r16: 'Octavos de Final',
   qf: 'Cuartos de Final',
   sf: 'Semifinales',
