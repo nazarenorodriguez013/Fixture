@@ -46,7 +46,6 @@ export function useKnockoutMap(results: Record<string, Result>): Record<string, 
     const map: Record<string, string> = {};
     const thirds: Array<Standing & { group: string }> = [];
 
-    // Resolve group 1st, 2nd and 3rd places
     for (const g of GROUPS) {
       const groupMatches = matches.filter((m) => m.phase === 'group' && m.group === g);
       const allPlayed = groupMatches.length > 0 && groupMatches.every((m) => results[m.id]);
@@ -58,18 +57,16 @@ export function useKnockoutMap(results: Record<string, Result>): Record<string, 
       if (standings[2]) thirds.push({ ...standings[2], group: g });
     }
 
-    // Best 8 third-place teams
+    // Los 8 mejores terceros clasifican a dieciseisavos
     thirds
       .sort((a, b) => b.pts - a.pts || b.dg - a.dg || b.gf - a.gf)
       .slice(0, 8)
       .forEach((t, i) => { map[`3rd${i + 1}`] = t.teamId; });
 
-    // Helper: resolve a placeholder through the map recursively
     function resolve(id: string): string {
       return map[id] ?? id;
     }
 
-    // Resolve knockout winners phase by phase
     const phases: Array<{ phase: string; winKey: string; loseKey?: string }> = [
       { phase: 'r32', winKey: 'W_R32_' },
       { phase: 'r16', winKey: 'W_R16_' },
@@ -82,7 +79,7 @@ export function useKnockoutMap(results: Record<string, Result>): Record<string, 
       for (const m of phaseMatches) {
         const r = results[m.id];
         if (!r) continue;
-        // Extract numeric index from match id (R32_1 → 1, QF1 → 1, SF1 → 1)
+        // Extrae el número del id del partido (R32_1 → 1, QF1 → 1, SF1 → 1)
         const num = m.id.replace(/^[A-Z_]+/, '');
         const homeTeam = resolve(m.homeId);
         const awayTeam = resolve(m.awayId);
@@ -93,7 +90,7 @@ export function useKnockoutMap(results: Record<string, Result>): Record<string, 
           map[`${winKey}${num}`] = awayTeam;
           if (loseKey) map[`${loseKey}${num}`] = homeTeam;
         }
-        // Tied result → winner TBD (penalties not tracked)
+        // Empate → ganador queda pendiente (no se cargan penales)
       }
     }
 

@@ -23,7 +23,6 @@ export default function MatchCard({ match, result, onSave, onClear, knockoutMap 
   const dateStr = dateObj.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
   const timeStr = dateObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-  // Resolve placeholder through knockoutMap first, then fallback to direct team lookup
   function resolveId(id: string): string {
     return knockoutMap[id] ?? id;
   }
